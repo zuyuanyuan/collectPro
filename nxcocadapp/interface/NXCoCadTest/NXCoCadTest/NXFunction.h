@@ -1,0 +1,10 @@
+void createRect(double leftUpX,double leftUpY,double rightDownX,double rightDownY,double z);
+void createSketch();
+void lashen(int height,int lineNum,int sketchNum,int sketchId);
+void createRect(double leftUpX,double leftUpZ,double rightDownX,double rightDownZ,double y,int id);
+void createPlane(int x);
+void drawCircle(double x,double y,double z,double r);
+void createSketchOnExtrude(int extrudeNum,const char *str1,const char *str2);
+void fanxianglashen(const char *sketchId,const char *sketchNum,const char *lashenLine,const char *targetExtrue,int length);
+void unDo();
+void createRect(double leftUpY,double leftUpZ,double rightDownY,double rightDownZ,double x,int id,int id2);

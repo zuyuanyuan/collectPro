@@ -30,6 +30,36 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="NXFunction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenu.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCreatePoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockDrawCircle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockcreateRectSameX.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCreateRectSameY.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCreateRectSameZ.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCreateSketchOnextrude.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockResverseExtrude.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockCreateExtrude.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="json\json.h">
@@ -39,6 +69,36 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NXFunction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenu.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCreatePoint.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockDrawCircle.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockcreateRectSameX.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCreateRectSameY.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCreateRectSameZ.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCreateSketchOnextrude.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockResverseExtrude.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockCreateExtrude.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

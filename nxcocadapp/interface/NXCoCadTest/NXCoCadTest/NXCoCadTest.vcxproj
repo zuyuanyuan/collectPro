@@ -114,7 +114,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level4</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
@@ -171,6 +171,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlockCreateExtrude.cpp" />
+    <ClCompile Include="BlockCreatePoint.cpp" />
+    <ClCompile Include="BlockcreateRectSameX.cpp" />
+    <ClCompile Include="BlockCreateRectSameY.cpp" />
+    <ClCompile Include="BlockCreateRectSameZ.cpp" />
+    <ClCompile Include="BlockCreateSketchOnextrude.cpp" />
+    <ClCompile Include="BlockDrawCircle.cpp" />
+    <ClCompile Include="BlockResverseExtrude.cpp" />
     <ClCompile Include="json\src\json_reader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeader>
@@ -189,15 +197,27 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="NXCoCADTest.cpp" />
+    <ClCompile Include="NXFunction.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BlockCreateExtrude.hpp" />
+    <ClInclude Include="BlockCreatePoint.hpp" />
+    <ClInclude Include="BlockcreateRectSameX.hpp" />
+    <ClInclude Include="BlockCreateRectSameY.hpp" />
+    <ClInclude Include="BlockCreateRectSameZ.hpp" />
+    <ClInclude Include="BlockCreateSketchOnextrude.hpp" />
+    <ClInclude Include="BlockDrawCircle.hpp" />
+    <ClInclude Include="BlockResverseExtrude.hpp" />
     <ClInclude Include="json\json.h" />
+    <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="NXCoCADTest.hpp" />
+    <ClInclude Include="NXFunction.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>

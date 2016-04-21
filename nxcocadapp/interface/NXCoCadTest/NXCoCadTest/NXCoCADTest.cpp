@@ -71,13 +71,58 @@
 #include <NXOpen/Unit.hxx>
 #include <NXOpen/UnitCollection.hxx>
 #include <NXOpen/Update.hxx>
+#include "NXFunction.h"
+
+#include <uf_defs.h>
+#include <NXOpen/NXException.hxx>
+#include <NXOpen/Session.hxx>
+#include <NXOpen/BasePart.hxx>
+#include <NXOpen/Builder.hxx>
+#include <NXOpen/Direction.hxx>
+#include <NXOpen/Expression.hxx>
+#include <NXOpen/ExpressionCollection.hxx>
+#include <NXOpen/Features_Feature.hxx>
+#include <NXOpen/GeometricUtilities_OnPathDimensionBuilder.hxx>
+#include <NXOpen/NXObject.hxx>
+#include <NXOpen/Part.hxx>
+#include <NXOpen/PartCollection.hxx>
+#include <NXOpen/Plane.hxx>
+#include <NXOpen/Point.hxx>
+#include <NXOpen/Preferences_SessionPreferences.hxx>
+#include <NXOpen/Preferences_SessionSketch.hxx>
+#include <NXOpen/ScCollector.hxx>
+#include <NXOpen/Section.hxx>
+#include <NXOpen/SelectIReferenceAxis.hxx>
+#include <NXOpen/SelectISurface.hxx>
+#include <NXOpen/SelectObject.hxx>
+#include <NXOpen/Sketch.hxx>
+#include <NXOpen/SketchAlongPathBuilder.hxx>
+#include <NXOpen/SketchCollection.hxx>
+#include <NXOpen/SketchInPlaceBuilder.hxx>
+#include <NXOpen/TaggedObject.hxx>
+#include <NXOpen/Unit.hxx>
+#include <NXOpen/UnitCollection.hxx>
+#include <NXOpen/Update.hxx>
+#include <NXOpen/Annotations_Dimension.hxx>
+#include <NXOpen/Arc.hxx>
+#include <NXOpen/BasePart.hxx>
+#include <NXOpen/CurveCollection.hxx>
+#include <NXOpen/Expression.hxx>
+#include <NXOpen/Features_DatumCsys.hxx>
+#include <NXOpen/Features_FeatureCollection.hxx>
+#include <NXOpen/NXMatrix.hxx>
+#include <NXOpen/Part.hxx>
+#include <NXOpen/PartCollection.hxx>
+#include <NXOpen/Point.hxx>
+#include <NXOpen/Sketch.hxx>
+#include <NXOpen/SketchDimensionalConstraint.hxx>
+#include <NXOpen/SketchGeometricConstraint.hxx>
+#include <MainMenu.hpp>
 
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
 using namespace std;
 
-using namespace NXOpen;
-using namespace NXOpen::BlockStyler;
 
 //------------------------------------------------------------------------------
 // Initialize static variables
@@ -194,12 +239,21 @@ extern "C" DllExport void  ufusr(char *param, int *retcod, int param_len)
 
     try
     {
-        theNXCoCADTest = new NXCoCADTest();
+		if(!Initialize())
+		{
+			NXCoCADTest::theUI->NXMessageBox()->Show("Iniliazation Failed", NXOpen::NXMessageBox::DialogTypeError, "Iniliazation Failed");
+			return;
+		}
+		 MainMenu *theMainMenu = NULL;
+		 theMainMenu = new MainMenu();
+		 theMainMenu->Show();
+		
+       // theNXCoCADTest = new NXCoCADTest();
 
-		handle = CreateThread(NULL, 0, ThreadProc, (LPVOID)&test, 0, &numThreadId);
+		//handle = CreateThread(NULL, 0, ThreadProc, (LPVOID)&test, 0, &numThreadId);
 
         // The following method shows the dialog immediately
-        theNXCoCADTest->Show();
+       // theNXCoCADTest->Show();
     }
     catch(exception& ex)
     {
@@ -310,7 +364,7 @@ void NXCoCADTest::dialogShown_cb()
 {
     try
     {
-        //---- Enter your callback code here -----
+        //---- Enter your callback code here ----- **************************
         if(!Initialize())
         {
             NXCoCADTest::theUI->NXMessageBox()->Show("Iniliazation Failed", NXOpen::NXMessageBox::DialogTypeError, "Iniliazation Failed");
@@ -515,7 +569,6 @@ bool Terminate(void)
 }
 
 
-
 //创建线程
 DWORD WINAPI ThreadProc(LPVOID lpParameter)
 {
@@ -547,7 +600,6 @@ DWORD WINAPI ThreadProc(LPVOID lpParameter)
 			{
 				currentNum ++;
 				char nn[12] = "";
-				sprintf(nn,"%d",currentNum);
 				x += 10;
 				y += 10;
 				if (currentNum == taskNum)
@@ -558,7 +610,8 @@ DWORD WINAPI ThreadProc(LPVOID lpParameter)
 					//message->Show("thread",NXMessageBox::DialogTypeQuestion,nn);
 					sprintf(nn,"%d",taskNum);
 					//message->Show("thread",NXMessageBox::DialogTypeQuestion,nn);
-					createPoint(x,y,z);
+					//createPoint(x,y,z);
+					//createSketch1();
 					taskNum ++;
 					break;
 				}
