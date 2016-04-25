@@ -36,6 +36,7 @@
 //------------------------------------------------------------------------------
 #include "BlockCreateRectSameZ.hpp"
 #include "NXFunction.h"
+#include "FileUtils.h"
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
 
@@ -216,7 +217,18 @@ int BlockCreateRectSameZ::update_cb(NXOpen::BlockStyler::UIBlock* block)
 			double rightX = double02->Value();
 			double rightY = double03->Value();
 			double z = double04->Value();
-			createRect(leftX,leftY,rightX,rightY,z);
+
+			Json::Value jCoordinate;
+			jCoordinate["para1"] = leftX;
+			jCoordinate["para2"] = leftY;
+			jCoordinate["para3"] = rightX;
+			jCoordinate["para4"] = rightY;
+			jCoordinate["para5"] = z;
+			jCoordinate["overloadType"] = 0;
+
+			startRunScripte("CreateRect",jCoordinate);
+
+			//createRect(leftX,leftY,rightX,rightY,z);
 
         }
     }

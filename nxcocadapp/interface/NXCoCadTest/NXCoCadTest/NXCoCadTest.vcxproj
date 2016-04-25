@@ -119,7 +119,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>libufun.lib;libnxopencpp.lib;libnxopencpp_annotations.lib;libnxopencpp_assemblies.lib;libnxopencpp_bodydes.lib;libnxopencpp_cae.lib;libnxopencpp_cam.lib;libnxopencpp_die.lib;libnxopencpp_display.lib;libnxopencpp_drafting.lib;libnxopencpp_drawings.lib;libnxopencpp_facet.lib;libnxopencpp_features.lib;libnxopencpp_fields.lib;libnxopencpp_formboard.lib;libnxopencpp_gateway.lib;libnxopencpp_geometricanalysis.lib;libnxopencpp_geometricutilities.lib;libnxopencpp_issue.lib;libnxopencpp_layer.lib;libnxopencpp_mechatronics.lib;libnxopencpp_modldirect.lib;libnxopencpp_motion.lib;libnxopencpp_optimization.lib;libnxopencpp_options.lib;libnxopencpp_pdm.lib;libnxopencpp_physmat.lib;libnxopencpp_positioning.lib;libnxopencpp_preferences.lib;libnxopencpp_routing.lib;libnxopencpp_shapesearch.lib;libnxopencpp_sheetmetal.lib;libnxopencpp_sim.lib;libnxopencpp_tooling.lib;libnxopencpp_userdefinedobjects.lib;libnxopencpp_validate.lib;libnxopencpp_visualreporting.lib;libnxopencpp_weld.lib;libugopenint.lib;libnxopenuicpp.lib;js_parser64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libufun.lib;libnxopencpp.lib;libnxopencpp_annotations.lib;libnxopencpp_assemblies.lib;libnxopencpp_bodydes.lib;libnxopencpp_cae.lib;libnxopencpp_cam.lib;libnxopencpp_die.lib;libnxopencpp_display.lib;libnxopencpp_drafting.lib;libnxopencpp_drawings.lib;libnxopencpp_facet.lib;libnxopencpp_features.lib;libnxopencpp_fields.lib;libnxopencpp_formboard.lib;libnxopencpp_gateway.lib;libnxopencpp_geometricanalysis.lib;libnxopencpp_geometricutilities.lib;libnxopencpp_issue.lib;libnxopencpp_layer.lib;libnxopencpp_mechatronics.lib;libnxopencpp_modldirect.lib;libnxopencpp_motion.lib;libnxopencpp_optimization.lib;libnxopencpp_options.lib;libnxopencpp_pdm.lib;libnxopencpp_physmat.lib;libnxopencpp_positioning.lib;libnxopencpp_preferences.lib;libnxopencpp_routing.lib;libnxopencpp_shapesearch.lib;libnxopencpp_sheetmetal.lib;libnxopencpp_sim.lib;libnxopencpp_tooling.lib;libnxopencpp_userdefinedobjects.lib;libnxopencpp_validate.lib;libnxopencpp_visualreporting.lib;libnxopencpp_weld.lib;libugopenint.lib;libnxopenuicpp.lib;js_parser64.lib;User32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(SolutionDir)\..\NXCoCadTest_d.dll</OutputFile>
       <AdditionalLibraryDirectories>..\..\;$(COMX_SDK)alone\lib;$(UGII_BASE_DIR)\ugopen;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -179,6 +179,7 @@
     <ClCompile Include="BlockCreateSketchOnextrude.cpp" />
     <ClCompile Include="BlockDrawCircle.cpp" />
     <ClCompile Include="BlockResverseExtrude.cpp" />
+    <ClCompile Include="FileUtils.cpp" />
     <ClCompile Include="json\src\json_reader.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
       </PrecompiledHeader>
@@ -214,6 +215,7 @@
     <ClInclude Include="BlockCreateSketchOnextrude.hpp" />
     <ClInclude Include="BlockDrawCircle.hpp" />
     <ClInclude Include="BlockResverseExtrude.hpp" />
+    <ClInclude Include="FileUtils.h" />
     <ClInclude Include="json\json.h" />
     <ClInclude Include="MainMenu.hpp" />
     <ClInclude Include="NXCoCADTest.hpp" />

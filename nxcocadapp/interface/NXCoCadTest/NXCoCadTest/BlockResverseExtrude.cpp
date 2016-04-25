@@ -35,6 +35,7 @@
 //These includes are needed for the following template code
 //------------------------------------------------------------------------------
 #include "BlockResverseExtrude.hpp"
+#include "FileUtils.h"
 #include "NXFunction.h"
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
@@ -196,7 +197,15 @@ int BlockResverseExtrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 			NXString ExtrudeLine = string02->Value();
 			NXString target = string03->Value();
 			int id = integer0->Value();
-			fanxianglashen(sketchId.getText(),sketchNum.getText(),ExtrudeLine.getText(),target.GetText(),id);
+			
+			Json::Value jcoor;
+			jcoor["sketchID"] = sketchId.getText();
+			jcoor["sketchNum"] = sketchNum.getText();
+			jcoor["extrudeLine"] = ExtrudeLine.getText();
+			jcoor["targetExtrude"] = target.getText();
+			jcoor["length"] = id;
+			startRunScripte("ReverseExtrude",jcoor);
+			//fanxianglashen(sketchId.getText(),sketchNum.getText(),ExtrudeLine.getText(),target.GetText(),id);
 
         }
     }

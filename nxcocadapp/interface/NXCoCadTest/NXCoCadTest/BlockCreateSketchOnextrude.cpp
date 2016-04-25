@@ -37,6 +37,7 @@
 #include "BlockCreateSketchOnextrude.hpp"
 #include <NXOPen/NXString.hxx>
 #include "NXFunction.h"
+#include "FileUtils.h"
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
 
@@ -187,7 +188,12 @@ int BlockCreateSketchOnextrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 			NXString edge = string0->Value();
 			NXString face = string01->Value();
 			//BlockCreateSketchOnextrude::theUI->NXMessageBox()->Show("Block Styler", NXOpen::NXMessageBox::DialogTypeError, edge.getText());
-			createSketchOnExtrude(id,edge.getText(),face.getText());	
+			Json::Value jcoor;
+			jcoor["extrudeNum"] = id;
+			jcoor["str1"] = edge.getText();
+			jcoor["str2"] = face.getText();
+			startRunScripte("CreateSketchOnExtrude",jcoor);
+			//createSketchOnExtrude(id,edge.getText(),face.getText());	
         
         //---------Enter your code here-----------
         }

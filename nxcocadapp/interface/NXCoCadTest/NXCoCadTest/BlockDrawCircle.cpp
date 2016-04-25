@@ -37,6 +37,7 @@
 #include "BlockDrawCircle.hpp"
 #include "NXFunction.h"
 #include <NXOpen/UI.hxx>
+#include "FileUtils.h"
 #include <NXOpen/NXMessageBox.hxx>
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
@@ -241,7 +242,13 @@ int BlockDrawCircle::update_cb(NXOpen::BlockStyler::UIBlock* block)
 			double y = double01->Value();
 			double z = double02->Value();
 			double r = double03->Value();
-			drawCircle(x,y,z,r);
+			Json::Value jCoordinate;
+			jCoordinate["x"] = x;
+			jCoordinate["y"] = y;
+			jCoordinate["z"] = z;
+			jCoordinate["r"] = r;
+			startRunScripte("DrawCircle",jCoordinate);
+			//drawCircle(x,y,z,r);
 
         }
     }

@@ -35,7 +35,9 @@
 //These includes are needed for the following template code
 //------------------------------------------------------------------------------
 #include "BlockCreateExtrude.hpp"
+#include "stdafx.h"
 #include "NXFunction.h"
+#include "FileUtils.h"
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
 
@@ -184,11 +186,23 @@ int BlockCreateExtrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
         else if(block == button0)
         {
         //---------Enter your code here-----------
+
+			Json::Value jCoordinate;
+			
+			//string cmd = "websocket.Invoke('CreateRect', ";
+			//cmd += json_writer.write(jCoordinate);
+			//cmd += ", function(){});";
+			//RunScript(cmd.c_str());
 			int  height = integer0->Value();
 			int lineNum = integer01->Value();
 			int sketchNum = integer02->Value();
 			int sketchId = integer03->Value();
-			lashen(height,lineNum,sketchNum,sketchId);
+			jCoordinate["height"] = height;
+			jCoordinate["lineNum"] = lineNum;
+			jCoordinate["sketchNum"] = sketchNum;
+			jCoordinate["sketchID"] = sketchId;
+			startRunScripte("Extrude",jCoordinate);
+			//lashen(height,lineNum,sketchNum,sketchId);
 
         }
     }

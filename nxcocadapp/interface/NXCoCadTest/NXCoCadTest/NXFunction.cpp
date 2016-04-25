@@ -642,9 +642,9 @@ void createSketchOnExtrude(int extrudeNum,const char *str1,const char *str2)
 
 	sketch1->Activate(Sketch::ViewReorientTrue);
 
-	sketchInPlaceBuilder1->Destroy();
+	//sketchInPlaceBuilder1->Destroy();
 
-	sketchAlongPathBuilder1->Destroy();
+	//sketchAlongPathBuilder1->Destroy();
 
 	//drawCircle(-3.67140699961652, 0.31469202853856, 8.0);
 	//theSession->ActiveSketch()->Deactivate(Sketch::ViewReorientFalse, Sketch::UpdateLevelModel);

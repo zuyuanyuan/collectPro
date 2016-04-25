@@ -45,6 +45,9 @@
 #include "BlockCreateSketchOnextrude.hpp"
 #include "BlockResverseExtrude.hpp"
 #include "BlockCreateExtrude.hpp"
+#include "FileUtils.h"
+#include <NXOpen/Session.hxx>
+#include <NXOpen/Sketch.hxx>
 
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
@@ -262,6 +265,14 @@ int MainMenu::apply_cb()
 //------------------------------------------------------------------------------
 //Callback Name: update_cb
 //------------------------------------------------------------------------------
+
+void finishCurrentOper()
+{
+
+	Session *theSession = Session::GetSession();
+	theSession->ActiveSketch()->Deactivate(Sketch::ViewReorientFalse, Sketch::UpdateLevelModel);
+}
+
 int MainMenu::update_cb(NXOpen::BlockStyler::UIBlock* block)
 {
     try
@@ -380,7 +391,8 @@ int MainMenu::update_cb(NXOpen::BlockStyler::UIBlock* block)
         else if(block == button7)
         {
         //---------Enter your code here-----------
-			createSketch();
+			startRunScripte("CreateSketch",NULL);
+			//createSketch();
         }
 		//拉伸体上见草图
         else if(block == button8)
@@ -419,6 +431,7 @@ int MainMenu::update_cb(NXOpen::BlockStyler::UIBlock* block)
         }
         else if(block == button11)
         {
+			finishCurrentOper();
         //---------Enter your code here-----------
         }
         else if(block == button12)
