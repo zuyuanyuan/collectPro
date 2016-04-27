@@ -187,139 +187,140 @@ using std::cerr;
 #include <NXOpen/SketchCollection.hxx>
 #include <NXOpen/Unit.hxx>
 #include <uf_exit.h>
+#include <cstring>
 using namespace NXOpen;
 
 
-void lashen(int height,int lineNum,int sketchNum,int sketchId)
-{
-	Session *theSession = Session::GetSession();
-	Part *workPart(theSession->Parts()->Work());
-	Part *displayPart(theSession->Parts()->Display());
-	// ----------------------------------------------
-	//   Menu: Insert->Design Feature->Extrude...
-	// ----------------------------------------------
-	// Session::UndoMarkId markId1;
-	//markId1 = theSession->SetUndoMark(Session::MarkVisibilityVisible, "Start");
-
-	Features::Feature *nullFeatures_Feature(NULL);
-
-	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
-	{
-		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
-	}
-
-	Features::ExtrudeBuilder *extrudeBuilder1;
-	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
-
-	Section *section1;
-
-	UI *plmHomeUI = UI::GetUI();
-	NXMessageBox *messageBox = plmHomeUI->NXMessageBox();
-
-	section1 = workPart->Sections()->CreateSection(0,0,0);
-
-	extrudeBuilder1->SetSection(section1);
-
-	extrudeBuilder1->AllowSelfIntersectingSection(true);
-
-	Unit *unit1;
-	unit1 = extrudeBuilder1->Draft()->FrontDraftAngle()->Units();
-
-
-	extrudeBuilder1->SetDistanceTolerance(0.001);
-
-	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeCreate);
-
-	std::vector<Body *> targetBodies1(1);
-	Body *nullBody(NULL);
-	targetBodies1[0] = nullBody;
-	//messageBox->Show("1",NXMessageBox::DialogTypeQuestion,"3");
-	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies1);
-
-
-	char str[10];
-	sprintf(str,"%d",height);
-
-
-	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
-
-	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(str);
-
-	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
-
-	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
-
-	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
-
-	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
-
-	GeometricUtilities::SmartVolumeProfileBuilder *smartVolumeProfileBuilder1;
-	smartVolumeProfileBuilder1 = extrudeBuilder1->SmartVolumeProfile();
-
-	smartVolumeProfileBuilder1->SetOpenProfileSmartVolumeOption(false);
-
-	smartVolumeProfileBuilder1->SetCloseProfileRule(GeometricUtilities::SmartVolumeProfileBuilder::CloseProfileRuleTypeFci);
-
-	section1->SetDistanceTolerance(0.001);
-
-	section1->SetChainingTolerance(0.00095);
-
-	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
-
-
-	std::vector<Features::Feature *> features1(1);
-
-	char sketch[20] = "SKETCH(";
-	sketch[7] = (sketchId + '0');
-	sketch[8] = ')';
-	//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,sketch);
-	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketch)));
-	features1[0] = sketchFeature1;
-	CurveFeatureRule *curveFeatureRule1;
-	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
-
-	section1->AllowSelfIntersection(true);
-
-	std::vector<SelectionIntentRule *> rules1(1);
-	rules1[0] = curveFeatureRule1;
-	//找到草图1
-	try
-	{
-		char str[20] = "SKETCH_00";
-		str[9] = (sketchNum + '0');
-		Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(str)));
-		//拉伸圆用Curve ArcX 拉伸矩形用Curve LineX x代表矩形线编号
-		sprintf(str,"%s", "Curve Line");//= "Curve Line";
-		char temp[3];
-		sprintf(temp,"%d",lineNum);
-		strcat(str,temp);
-
-		//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,str);
-		Line *line1(dynamic_cast<Line *>(sketch1->FindObject(str)));
-		NXObject *nullNXObject(NULL);
-		Point3d helpPoint1(0, 0, 0.0);
-		section1->AddToSection(rules1, line1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
-
-
-		Direction *direction1;
-		direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
-
-		extrudeBuilder1->SetDirection(direction1);
-	}
-	catch (NXException &ex)
-	{
-		messageBox->Show("错误",NXMessageBox::DialogTypeQuestion,ex.GetMessage());
-	}
-
-
-
-	extrudeBuilder1->SetParentFeatureInternal(false);
-
-	Features::Feature *feature1;
-	feature1 = extrudeBuilder1->CommitFeature();
-
-	extrudeBuilder1->Destroy();
-}
+// void lashen(int height,int lineNum,int sketchNum,int sketchId)
+// {
+// 	Session *theSession = Session::GetSession();
+// 	Part *workPart(theSession->Parts()->Work());
+// 	Part *displayPart(theSession->Parts()->Display());
+// 	// ----------------------------------------------
+// 	//   Menu: Insert->Design Feature->Extrude...
+// 	// ----------------------------------------------
+// 	// Session::UndoMarkId markId1;
+// 	//markId1 = theSession->SetUndoMark(Session::MarkVisibilityVisible, "Start");
+// 
+// 	Features::Feature *nullFeatures_Feature(NULL);
+// 
+// 	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
+// 	{
+// 		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
+// 	}
+// 
+// 	Features::ExtrudeBuilder *extrudeBuilder1;
+// 	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
+// 
+// 	Section *section1;
+// 
+// 	UI *plmHomeUI = UI::GetUI();
+// 	NXMessageBox *messageBox = plmHomeUI->NXMessageBox();
+// 
+// 	section1 = workPart->Sections()->CreateSection(0,0,0);
+// 
+// 	extrudeBuilder1->SetSection(section1);
+// 
+// 	extrudeBuilder1->AllowSelfIntersectingSection(true);
+// 
+// 	Unit *unit1;
+// 	unit1 = extrudeBuilder1->Draft()->FrontDraftAngle()->Units();
+// 
+// 
+// 	extrudeBuilder1->SetDistanceTolerance(0.001);
+// 
+// 	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeCreate);
+// 
+// 	std::vector<Body *> targetBodies1(1);
+// 	Body *nullBody(NULL);
+// 	targetBodies1[0] = nullBody;
+// 	//messageBox->Show("1",NXMessageBox::DialogTypeQuestion,"3");
+// 	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies1);
+// 
+// 
+// 	char str[10];
+// 	sprintf(str,"%d",height);
+// 
+// 
+// 	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
+// 
+// 	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(str);
+// 
+// 	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
+// 
+// 	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
+// 
+// 	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
+// 
+// 	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
+// 
+// 	GeometricUtilities::SmartVolumeProfileBuilder *smartVolumeProfileBuilder1;
+// 	smartVolumeProfileBuilder1 = extrudeBuilder1->SmartVolumeProfile();
+// 
+// 	smartVolumeProfileBuilder1->SetOpenProfileSmartVolumeOption(false);
+// 
+// 	smartVolumeProfileBuilder1->SetCloseProfileRule(GeometricUtilities::SmartVolumeProfileBuilder::CloseProfileRuleTypeFci);
+// 
+// 	section1->SetDistanceTolerance(0.001);
+// 
+// 	section1->SetChainingTolerance(0.00095);
+// 
+// 	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
+// 
+// 
+// 	std::vector<Features::Feature *> features1(1);
+// 
+// 	char sketch[20] = "SKETCH(";
+// 	sketch[7] = (sketchId + '0');
+// 	sketch[8] = ')';
+// 	//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,sketch);
+// 	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketch)));
+// 	features1[0] = sketchFeature1;
+// 	CurveFeatureRule *curveFeatureRule1;
+// 	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
+// 
+// 	section1->AllowSelfIntersection(true);
+// 
+// 	std::vector<SelectionIntentRule *> rules1(1);
+// 	rules1[0] = curveFeatureRule1;
+// 	//找到草图1
+// 	try
+// 	{
+// 		char str[20] = "SKETCH_00";
+// 		str[9] = (sketchNum + '0');
+// 		Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(str)));
+// 		//拉伸圆用Curve ArcX 拉伸矩形用Curve LineX x代表矩形线编号
+// 		sprintf(str,"%s", "Curve Line");//= "Curve Line";
+// 		char temp[3];
+// 		sprintf(temp,"%d",lineNum);
+// 		strcat(str,temp);
+// 
+// 		//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,str);
+// 		Line *line1(dynamic_cast<Line *>(sketch1->FindObject(str)));
+// 		NXObject *nullNXObject(NULL);
+// 		Point3d helpPoint1(0, 0, 0.0);
+// 		section1->AddToSection(rules1, line1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
+// 
+// 
+// 		Direction *direction1;
+// 		direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
+// 
+// 		extrudeBuilder1->SetDirection(direction1);
+// 	}
+// 	catch (NXException &ex)
+// 	{
+// 		messageBox->Show("错误",NXMessageBox::DialogTypeQuestion,ex.GetMessage());
+// 	}
+// 
+// 
+// 
+// 	extrudeBuilder1->SetParentFeatureInternal(false);
+// 
+// 	Features::Feature *feature1;
+// 	feature1 = extrudeBuilder1->CommitFeature();
+// 
+// 	extrudeBuilder1->Destroy();
+// }
 
 //建立开始草图
 void createSketch()
@@ -368,6 +369,7 @@ void createSketch()
 	Features::Feature *feature1;
 	feature1 = sketch1->Feature();
 	sketch1->Activate(Sketch::ViewReorientTrue);
+	feature1->SetName("mainSketch");
 	//drawCircle(0,0,0);
 
 	sketchInPlaceBuilder1->Destroy();
@@ -579,166 +581,166 @@ void createPlane(int x)
 
 //在一个拉伸体上建立草图
 //120 130 140分别代表不同的面 要注意
-void createSketchOnExtrude(int extrudeNum,const char *str1,const char *str2)
-{
-	Session *theSession = Session::GetSession();
-	Part *workPart(theSession->Parts()->Work());
-	Part *displayPart(theSession->Parts()->Display());
-	// ----------------------------------------------
-	//   Menu: Insert->Sketch...
-	// ----------------------------------------------
-
-	Sketch *nullSketch(NULL);
-	SketchInPlaceBuilder *sketchInPlaceBuilder1;
-	sketchInPlaceBuilder1 = workPart->Sketches()->CreateNewSketchInPlaceBuilder(nullSketch);
-
-	SketchAlongPathBuilder *sketchAlongPathBuilder1;
-	sketchAlongPathBuilder1 = workPart->Sketches()->CreateSketchAlongPathBuilder(nullSketch);
-
-	sketchAlongPathBuilder1->PlaneLocation()->Expression()->SetRightHandSide("0");
-
-	Scalar *scalar1;
-	scalar1 = workPart->Scalars()->CreateScalar(1.0, Scalar::DimensionalityTypeNone, SmartObject::UpdateOptionWithinModeling);
-
-	char str[20] = "EXTRUDE(";
-	str[8] = (extrudeNum + '0');
-	str[9] = ')';
-
-	Features::Extrude *extrude1(dynamic_cast<Features::Extrude *>(workPart->Features()->FindObject(str)));
-	Edge *edge1(dynamic_cast<Edge *>(extrude1->FindObject(str1)));
-
-
-	Face *face1(dynamic_cast<Face *>(extrude1->FindObject(str2)));
-	Point3d point2(6.07069932873057, -4.5, 0.54146852704205);
-	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1, workPart->ModelingViews()->WorkView(), point2);
-
-
-	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(NULL);
-
-	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1);
-
-	sketchInPlaceBuilder1->Axis()->SetValue(edge1);
-
-	theSession->Preferences()->Sketch()->SetCreateInferredConstraints(true);
-
-	theSession->Preferences()->Sketch()->SetContinuousAutoDimensioning(true);
-
-	theSession->Preferences()->Sketch()->SetDimensionLabel(Preferences::SketchPreferences::DimensionLabelTypeExpression);
-
-	theSession->Preferences()->Sketch()->SetTextSizeFixed(true);
-
-	theSession->Preferences()->Sketch()->SetFixedTextSize(3.0);
-
-	theSession->Preferences()->Sketch()->SetConstraintSymbolSize(3.0);
-
-	theSession->Preferences()->Sketch()->SetDisplayObjectColor(false);
-
-	NXObject *nXObject1;
-	nXObject1 = sketchInPlaceBuilder1->Commit();
-
-	Sketch *sketch1(dynamic_cast<Sketch *>(nXObject1));
-	Features::Feature *feature1;
-	feature1 = sketch1->Feature();
-
-	sketch1->Activate(Sketch::ViewReorientTrue);
-
-	//sketchInPlaceBuilder1->Destroy();
-
-	//sketchAlongPathBuilder1->Destroy();
-
-	//drawCircle(-3.67140699961652, 0.31469202853856, 8.0);
-	//theSession->ActiveSketch()->Deactivate(Sketch::ViewReorientFalse, Sketch::UpdateLevelModel);
-}
-
-
-void fanxianglashen(const char *sketchId,const char *sketchNum,const char *lashenLine,const char *targetExtrue,int length)
-{
-	Session *theSession = Session::GetSession();
-	Part *workPart(theSession->Parts()->Work());
-	Part *displayPart(theSession->Parts()->Display());
-	// ----------------------------------------------
-	//   Menu: Insert->Design Feature->Extrude...
-	// ----------------------------------------------
-	Features::Feature *nullFeatures_Feature(NULL);
+// void createSketchOnExtrude(int extrudeNum,const char *str1,const char *str2)
+// {
+// 	Session *theSession = Session::GetSession();
+// 	Part *workPart(theSession->Parts()->Work());
+// 	Part *displayPart(theSession->Parts()->Display());
+// 	// ----------------------------------------------
+// 	//   Menu: Insert->Sketch...
+// 	// ----------------------------------------------
+// 
+// 	Sketch *nullSketch(NULL);
+// 	SketchInPlaceBuilder *sketchInPlaceBuilder1;
+// 	sketchInPlaceBuilder1 = workPart->Sketches()->CreateNewSketchInPlaceBuilder(nullSketch);
+// 
+// 	SketchAlongPathBuilder *sketchAlongPathBuilder1;
+// 	sketchAlongPathBuilder1 = workPart->Sketches()->CreateSketchAlongPathBuilder(nullSketch);
+// 
+// 	sketchAlongPathBuilder1->PlaneLocation()->Expression()->SetRightHandSide("0");
+// 
+// 	Scalar *scalar1;
+// 	scalar1 = workPart->Scalars()->CreateScalar(1.0, Scalar::DimensionalityTypeNone, SmartObject::UpdateOptionWithinModeling);
+// 
+// 	char str[20] = "EXTRUDE(";
+// 	str[8] = (extrudeNum + '0');
+// 	str[9] = ')';
+// 
+// 	Features::Extrude *extrude1(dynamic_cast<Features::Extrude *>(workPart->Features()->FindObject(str)));
+// 	Edge *edge1(dynamic_cast<Edge *>(extrude1->FindObject(str1)));
+// 
+// 
+// 	Face *face1(dynamic_cast<Face *>(extrude1->FindObject(str2)));
+// 	Point3d point2(6.07069932873057, -4.5, 0.54146852704205);
+// 	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1, workPart->ModelingViews()->WorkView(), point2);
+// 
+// 
+// 	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(NULL);
+// 
+// 	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1);
+// 
+// 	sketchInPlaceBuilder1->Axis()->SetValue(edge1);
+// 
+// 	theSession->Preferences()->Sketch()->SetCreateInferredConstraints(true);
+// 
+// 	theSession->Preferences()->Sketch()->SetContinuousAutoDimensioning(true);
+// 
+// 	theSession->Preferences()->Sketch()->SetDimensionLabel(Preferences::SketchPreferences::DimensionLabelTypeExpression);
+// 
+// 	theSession->Preferences()->Sketch()->SetTextSizeFixed(true);
+// 
+// 	theSession->Preferences()->Sketch()->SetFixedTextSize(3.0);
+// 
+// 	theSession->Preferences()->Sketch()->SetConstraintSymbolSize(3.0);
+// 
+// 	theSession->Preferences()->Sketch()->SetDisplayObjectColor(false);
+// 
+// 	NXObject *nXObject1;
+// 	nXObject1 = sketchInPlaceBuilder1->Commit();
+// 
+// 	Sketch *sketch1(dynamic_cast<Sketch *>(nXObject1));
+// 	Features::Feature *feature1;
+// 	feature1 = sketch1->Feature();
+// 
+// 	sketch1->Activate(Sketch::ViewReorientTrue);
+// 
+// 	//sketchInPlaceBuilder1->Destroy();
+// 
+// 	//sketchAlongPathBuilder1->Destroy();
+// 
+// 	//drawCircle(-3.67140699961652, 0.31469202853856, 8.0);
+// 	//theSession->ActiveSketch()->Deactivate(Sketch::ViewReorientFalse, Sketch::UpdateLevelModel);
+// }
 
 
-	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
-	{
-		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
-	}
-
-	Features::ExtrudeBuilder *extrudeBuilder1;
-	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
-
-	Section *section1;
-	section1 = workPart->Sections()->CreateSection(0.00095, 0.001, 0.05);
-
-	extrudeBuilder1->SetSection(section1);
-
-	extrudeBuilder1->AllowSelfIntersectingSection(true);
-
-	extrudeBuilder1->SetDistanceTolerance(0.001);
-
-	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
-
-	char changdu[3] = "";
-	sprintf(changdu,"%d",length);
-	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(changdu);
-
-	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
-
-	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
-
-	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
-
-	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
-
-	section1->SetDistanceTolerance(0.001);
-
-	section1->SetChainingTolerance(0.00095);
-
-	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
-
-	std::vector<Features::Feature *> features1(1);
-	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketchId)));//"SKETCH(4)"
-	features1[0] = sketchFeature1;
-	CurveFeatureRule *curveFeatureRule1;
-	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
-
-	section1->AllowSelfIntersection(true);
-
-	std::vector<SelectionIntentRule *> rules1(1);
-	rules1[0] = curveFeatureRule1;
-	Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(sketchNum)));//"SKETCH_001"
-	Arc *arc1(dynamic_cast<Arc *>(sketch1->FindObject(lashenLine)));//"Curve Arc2"
-	NXObject *nullNXObject(NULL);
-	Point3d helpPoint1(-1.99886248178789, 2.66552710079727, 8.0);
-	section1->AddToSection(rules1, arc1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
-
-	Direction *direction1;
-	direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
-
-	Body *body1(dynamic_cast<Body *>(workPart->Bodies()->FindObject(targetExtrue)));//"EXTRUDE(2)"
-
-	bool success1;
-	success1 = direction1->ReverseDirection();
-
-	extrudeBuilder1->SetDirection(direction1);
-
-
-	std::vector<Body *> targetBodies(1);
-	targetBodies[0] = body1;
-	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies);
-
-	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeSubtract);
-
-	extrudeBuilder1->SetParentFeatureInternal(false);
-
-	Features::Feature *feature1;
-	feature1 = extrudeBuilder1->CommitFeature();
-
-	extrudeBuilder1->Destroy();
-}
+// void fanxianglashen(const char *sketchId,const char *sketchNum,const char *lashenLine,const char *targetExtrue,int length)
+// {
+// 	Session *theSession = Session::GetSession();
+// 	Part *workPart(theSession->Parts()->Work());
+// 	Part *displayPart(theSession->Parts()->Display());
+// 	// ----------------------------------------------
+// 	//   Menu: Insert->Design Feature->Extrude...
+// 	// ----------------------------------------------
+// 	Features::Feature *nullFeatures_Feature(NULL);
+// 
+// 
+// 	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
+// 	{
+// 		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
+// 	}
+// 
+// 	Features::ExtrudeBuilder *extrudeBuilder1;
+// 	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
+// 
+// 	Section *section1;
+// 	section1 = workPart->Sections()->CreateSection(0.00095, 0.001, 0.05);
+// 
+// 	extrudeBuilder1->SetSection(section1);
+// 
+// 	extrudeBuilder1->AllowSelfIntersectingSection(true);
+// 
+// 	extrudeBuilder1->SetDistanceTolerance(0.001);
+// 
+// 	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
+// 
+// 	char changdu[3] = "";
+// 	sprintf(changdu,"%d",length);
+// 	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(changdu);
+// 
+// 	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
+// 
+// 	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
+// 
+// 	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
+// 
+// 	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
+// 
+// 	section1->SetDistanceTolerance(0.001);
+// 
+// 	section1->SetChainingTolerance(0.00095);
+// 
+// 	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
+// 
+// 	std::vector<Features::Feature *> features1(1);
+// 	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketchId)));//"SKETCH(4)"
+// 	features1[0] = sketchFeature1;
+// 	CurveFeatureRule *curveFeatureRule1;
+// 	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
+// 
+// 	section1->AllowSelfIntersection(true);
+// 
+// 	std::vector<SelectionIntentRule *> rules1(1);
+// 	rules1[0] = curveFeatureRule1;
+// 	Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(sketchNum)));//"SKETCH_001"
+// 	Arc *arc1(dynamic_cast<Arc *>(sketch1->FindObject(lashenLine)));//"Curve Arc2"
+// 	NXObject *nullNXObject(NULL);
+// 	Point3d helpPoint1(-1.99886248178789, 2.66552710079727, 8.0);
+// 	section1->AddToSection(rules1, arc1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
+// 
+// 	Direction *direction1;
+// 	direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
+// 
+// 	Body *body1(dynamic_cast<Body *>(workPart->Bodies()->FindObject(targetExtrue)));//"EXTRUDE(2)"
+// 
+// 	bool success1;
+// 	success1 = direction1->ReverseDirection();
+// 
+// 	extrudeBuilder1->SetDirection(direction1);
+// 
+// 
+// 	std::vector<Body *> targetBodies(1);
+// 	targetBodies[0] = body1;
+// 	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies);
+// 
+// 	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeSubtract);
+// 
+// 	extrudeBuilder1->SetParentFeatureInternal(false);
+// 
+// 	Features::Feature *feature1;
+// 	feature1 = extrudeBuilder1->CommitFeature();
+// 
+// 	extrudeBuilder1->Destroy();
+// }
 
 void drawCircle(double x,double y,double z,double r)
 {
@@ -787,4 +789,406 @@ void unDo()
 	bool marksRecycled1;
 	bool undoUnavailable1;
 	theSession->UndoLastNVisibleMarks(1, &marksRecycled1, &undoUnavailable1);
+}
+
+char* getJournalId(char name[])
+{
+	char res[100];
+	Session *theSession = Session::GetSession();
+	Part *workPart(theSession->Parts()->Work());
+	Part *displayPart(theSession->Parts()->Display());
+	Part *thePart = theSession->Parts()->Work();
+
+	NXOpen::Features::FeatureCollection::iterator i;
+
+	for (i =thePart->Features()->begin(); i!=thePart->Features()->end(); i++)
+	{
+		//NXOpen::UI::GetUI()->NXMessageBox()->Show("hhahahhaha",NXMessageBox::DialogTypeInformation,(*i)->Name().GetText());
+		if (strstr((*i)->Name().GetText(),name))
+		{
+			char extrudeName[100];
+			strcpy(extrudeName,(*i)->JournalIdentifier().GetText());
+			//NXOpen::UI::GetUI()->NXMessageBox()->Show("hhahahhaha",NXMessageBox::DialogTypeInformation,extrudeName);
+			//Features::Extrude *extrude(dynamic_cast<Features::Extrude *>(workPart->Features()->FindObject(extrudeName)));
+			//extrude1->SetName("zuyuanzhang");
+			strcpy(res,(*i)->JournalIdentifier().GetText());
+			//break;;
+		}
+
+	}
+	return res;
+
+}
+
+char* getFeatureName(char name[])
+{
+
+	char res[100];
+	char temp[50];
+	Session *theSession = Session::GetSession();
+	Part *workPart(theSession->Parts()->Work());
+	Part *displayPart(theSession->Parts()->Display());
+	Part *thePart = theSession->Parts()->Work();
+
+	NXOpen::Features::FeatureCollection::iterator i;
+
+	for (i =thePart->Features()->begin(); i!=thePart->Features()->end(); i++)
+	{
+		//NXOpen::UI::GetUI()->NXMessageBox()->Show("hhahahhaha",NXMessageBox::DialogTypeInformation,(*i)->Name().GetText());
+		if (strstr((*i)->Name().GetText(),name))
+		{
+			strcpy(temp,(*i)->GetFeatureName().getText());
+			//break;;
+		}
+
+	}
+
+	int length = strlen(temp);
+	memset(res,0,sizeof(res));
+	for (int i=0; i<length; i++)
+	{
+		if (temp[i] != ':')
+		{
+			res[i] = temp[i];
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return res;
+
+}
+
+
+
+void lashen(int height,char targetSketchName[],char setName[])
+{
+	Session *theSession = Session::GetSession();
+	Part *workPart(theSession->Parts()->Work());
+	Part *displayPart(theSession->Parts()->Display());
+	// ----------------------------------------------
+	//   Menu: Insert->Design Feature->Extrude...
+	// ----------------------------------------------
+	// Session::UndoMarkId markId1;
+	//markId1 = theSession->SetUndoMark(Session::MarkVisibilityVisible, "Start");
+
+	Features::Feature *nullFeatures_Feature(NULL);
+
+	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
+	{
+		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
+	}
+
+	Features::ExtrudeBuilder *extrudeBuilder1;
+	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
+
+	Section *section1;
+
+	UI *plmHomeUI = UI::GetUI();
+	NXMessageBox *messageBox = plmHomeUI->NXMessageBox();
+
+	section1 = workPart->Sections()->CreateSection(0,0,0);
+
+	extrudeBuilder1->SetSection(section1);
+
+	extrudeBuilder1->AllowSelfIntersectingSection(true);
+
+	Unit *unit1;
+	unit1 = extrudeBuilder1->Draft()->FrontDraftAngle()->Units();
+
+
+	extrudeBuilder1->SetDistanceTolerance(0.001);
+
+	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeCreate);
+
+	std::vector<Body *> targetBodies1(1);
+	Body *nullBody(NULL);
+	targetBodies1[0] = nullBody;
+	//messageBox->Show("1",NXMessageBox::DialogTypeQuestion,"3");
+	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies1);
+
+
+	char str[10];
+	sprintf(str,"%d",height);
+
+
+	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
+
+	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(str);
+
+	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
+
+	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
+
+	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
+
+	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
+
+	GeometricUtilities::SmartVolumeProfileBuilder *smartVolumeProfileBuilder1;
+	smartVolumeProfileBuilder1 = extrudeBuilder1->SmartVolumeProfile();
+
+	smartVolumeProfileBuilder1->SetOpenProfileSmartVolumeOption(false);
+
+	smartVolumeProfileBuilder1->SetCloseProfileRule(GeometricUtilities::SmartVolumeProfileBuilder::CloseProfileRuleTypeFci);
+
+	section1->SetDistanceTolerance(0.001);
+
+	section1->SetChainingTolerance(0.00095);
+
+	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
+
+
+	std::vector<Features::Feature *> features1(1);
+
+	char* sketch = getJournalId(targetSketchName);
+	//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,sketch);
+	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketch)));
+	features1[0] = sketchFeature1;
+	CurveFeatureRule *curveFeatureRule1;
+	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
+
+	section1->AllowSelfIntersection(true);
+
+	std::vector<SelectionIntentRule *> rules1(1);
+	rules1[0] = curveFeatureRule1;
+
+
+	//找到草图1
+	try
+	{
+		char* str = getFeatureName(targetSketchName);
+		Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(str)));
+		//拉伸圆用Curve ArcX 拉伸矩形用Curve LineX x代表矩形线编号
+		std::vector<NXOpen::NXObject *>s = sketch1->GetAllGeometry();
+
+		const char* temp;
+		if (s.size() > 0)
+		{
+			temp = s[0]->Name().getText();
+		}
+
+		char lineName[50] = "Curve ";
+		strcat(lineName,temp);
+
+		//messageBox->Show("提示",NXMessageBox::DialogTypeQuestion,str);
+		//NXOpen::UI::GetUI()->NXMessageBox()->Show("str",NXMessageBox::DialogTypeInformation,lineName);
+		Line *line1(dynamic_cast<Line *>(sketch1->FindObject(lineName)));
+		NXObject *nullNXObject(NULL);
+		Point3d helpPoint1(0, 0, 0.0);
+		section1->AddToSection(rules1, line1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
+
+
+		Direction *direction1;
+		direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
+
+		extrudeBuilder1->SetDirection(direction1);
+	}
+	catch (NXException &ex)
+	{
+		messageBox->Show("错误",NXMessageBox::DialogTypeQuestion,ex.GetMessage());
+	}
+
+
+
+	extrudeBuilder1->SetParentFeatureInternal(false);
+
+	Features::Feature *feature1;
+	feature1 = extrudeBuilder1->CommitFeature();
+	feature1->SetName(setName);
+
+	extrudeBuilder1->Destroy();
+}
+
+
+
+
+//在一个拉伸体上建立草图
+//120 130 140分别代表不同的面 要注意
+void createSketchOnExtrude(char targetExtrude[],char *str1,char *str2,char setName[])
+{
+	Session *theSession = Session::GetSession();
+	Part *workPart(theSession->Parts()->Work());
+	Part *displayPart(theSession->Parts()->Display());
+	// ----------------------------------------------
+	//   Menu: Insert->Sketch...
+	// ----------------------------------------------
+
+	Sketch *nullSketch(NULL);
+	SketchInPlaceBuilder *sketchInPlaceBuilder1;
+	sketchInPlaceBuilder1 = workPart->Sketches()->CreateNewSketchInPlaceBuilder(nullSketch);
+
+	SketchAlongPathBuilder *sketchAlongPathBuilder1;
+	sketchAlongPathBuilder1 = workPart->Sketches()->CreateSketchAlongPathBuilder(nullSketch);
+
+	sketchAlongPathBuilder1->PlaneLocation()->Expression()->SetRightHandSide("0");
+
+	Scalar *scalar1;
+	scalar1 = workPart->Scalars()->CreateScalar(1.0, Scalar::DimensionalityTypeNone, SmartObject::UpdateOptionWithinModeling);
+
+	// 	char str[20] = "EXTRUDE(";
+	// 	str[8] = (extrudeNum + '0');
+	// 	str[9] = ')';
+	char* sketch = getJournalId(targetExtrude);
+
+	Features::Extrude *extrude1(dynamic_cast<Features::Extrude *>(workPart->Features()->FindObject(sketch)));
+	Edge *edge1(dynamic_cast<Edge *>(extrude1->FindObject(str1)));
+
+
+	Face *face1(dynamic_cast<Face *>(extrude1->FindObject(str2)));
+	Point3d point2(6.07069932873057, -4.5, 0.54146852704205);
+	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1, workPart->ModelingViews()->WorkView(), point2);
+
+
+	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(NULL);
+
+	sketchInPlaceBuilder1->PlaneOrFace()->SetValue(face1);
+
+	sketchInPlaceBuilder1->Axis()->SetValue(edge1);
+
+	theSession->Preferences()->Sketch()->SetCreateInferredConstraints(true);
+
+	theSession->Preferences()->Sketch()->SetContinuousAutoDimensioning(true);
+
+	theSession->Preferences()->Sketch()->SetDimensionLabel(Preferences::SketchPreferences::DimensionLabelTypeExpression);
+
+	theSession->Preferences()->Sketch()->SetTextSizeFixed(true);
+
+	theSession->Preferences()->Sketch()->SetFixedTextSize(3.0);
+
+	theSession->Preferences()->Sketch()->SetConstraintSymbolSize(3.0);
+
+	theSession->Preferences()->Sketch()->SetDisplayObjectColor(false);
+
+	NXObject *nXObject1;
+	nXObject1 = sketchInPlaceBuilder1->Commit();
+
+	Sketch *sketch1(dynamic_cast<Sketch *>(nXObject1));
+	//sketch1->SetName(setName);
+	Features::Feature *feature1;
+	feature1 = sketch1->Feature();
+	feature1->SetName(setName);
+
+	sketch1->Activate(Sketch::ViewReorientTrue);
+
+	sketchInPlaceBuilder1->Destroy();
+
+	sketchAlongPathBuilder1->Destroy();
+
+	//drawCircle(-3.67140699961652, 0.31469202853856, 8.0);
+	//theSession->ActiveSketch()->Deactivate(Sketch::ViewReorientFalse, Sketch::UpdateLevelModel);
+}
+
+
+void fanxianglashen(char targetSketchName[],char targetExtrueName[],int length,char setName[])
+{
+	Session *theSession = Session::GetSession();
+	Part *workPart(theSession->Parts()->Work());
+	Part *displayPart(theSession->Parts()->Display());
+	// ----------------------------------------------
+	//   Menu: Insert->Design Feature->Extrude...
+	// ----------------------------------------------
+
+	Features::Feature *nullFeatures_Feature(NULL);
+
+	if ( !workPart->Preferences()->Modeling()->GetHistoryMode() )
+	{
+		throw NXException::Create("Create or edit of a Feature was recorded in History Mode but playback is in History-Free Mode.");
+	}
+
+	Features::ExtrudeBuilder *extrudeBuilder1;
+	extrudeBuilder1 = workPart->Features()->CreateExtrudeBuilder(nullFeatures_Feature);
+
+	Section *section1;
+	section1 = workPart->Sections()->CreateSection(0.00095, 0.001, 0.05);
+
+	extrudeBuilder1->SetSection(section1);
+
+	extrudeBuilder1->AllowSelfIntersectingSection(true);
+
+	extrudeBuilder1->SetDistanceTolerance(0.001);
+
+	extrudeBuilder1->Limits()->StartExtend()->Value()->SetRightHandSide("0");
+
+	char changdu[3] = "";
+	sprintf(changdu,"%d",length);
+	extrudeBuilder1->Limits()->EndExtend()->Value()->SetRightHandSide(changdu);
+
+	extrudeBuilder1->Draft()->FrontDraftAngle()->SetRightHandSide("2");
+
+	extrudeBuilder1->Draft()->BackDraftAngle()->SetRightHandSide("2");
+
+	extrudeBuilder1->Offset()->StartOffset()->SetRightHandSide("0");
+
+	extrudeBuilder1->Offset()->EndOffset()->SetRightHandSide("5");
+
+	section1->SetDistanceTolerance(0.001);
+
+	section1->SetChainingTolerance(0.00095);
+
+	section1->SetAllowedEntityTypes(Section::AllowTypesOnlyCurves);
+
+	std::vector<Features::Feature *> features1(1);
+	char* sketch = getJournalId(targetSketchName);
+	//NXOpen::UI::GetUI()->NXMessageBox()->Show("hhahahhaha",NXMessageBox::DialogTypeInformation,extrudeName);
+	Features::SketchFeature *sketchFeature1(dynamic_cast<Features::SketchFeature *>(workPart->Features()->FindObject(sketch)));//"SKETCH(4)"
+	features1[0] = sketchFeature1;
+	CurveFeatureRule *curveFeatureRule1;
+	curveFeatureRule1 = workPart->ScRuleFactory()->CreateRuleCurveFeature(features1);
+
+	section1->AllowSelfIntersection(true);
+
+	std::vector<SelectionIntentRule *> rules1(1);
+	rules1[0] = curveFeatureRule1;
+	char* str = getFeatureName(targetSketchName);
+	Sketch *sketch1(dynamic_cast<Sketch *>(workPart->Sketches()->FindObject(str)));//"SKETCH_001"
+	//拉伸圆用Curve ArcX 拉伸矩形用Curve LineX x代表矩形线编号
+	std::vector<NXOpen::NXObject *>s = sketch1->GetAllGeometry();
+
+	const char* temp;
+	if (s.size() > 0)
+	{
+		temp = s[0]->Name().getText();
+	}
+
+	char lineName[50] = "Curve ";
+	strcat(lineName,temp);
+	Arc *arc1(dynamic_cast<Arc *>(sketch1->FindObject(lineName)));//"Curve Arc2"
+	NXObject *nullNXObject(NULL);
+	Point3d helpPoint1(-1.99886248178789, 2.66552710079727, 8.0);
+	section1->AddToSection(rules1, arc1, nullNXObject, nullNXObject, helpPoint1, Section::ModeCreate, false);
+
+	Direction *direction1;
+	direction1 = workPart->Directions()->CreateDirection(sketch1, SenseForward, SmartObject::UpdateOptionWithinModeling);
+	char* sketch2 = getJournalId(targetExtrueName);
+	Body *body1(dynamic_cast<Body *>(workPart->Bodies()->FindObject(sketch2)));//"EXTRUDE(2)"
+
+	bool success1;
+	success1 = direction1->ReverseDirection();
+
+	extrudeBuilder1->SetDirection(direction1);
+
+
+	std::vector<Body *> targetBodies(1);
+	targetBodies[0] = body1;
+	extrudeBuilder1->BooleanOperation()->SetTargetBodies(targetBodies);
+
+	extrudeBuilder1->BooleanOperation()->SetType(GeometricUtilities::BooleanOperation::BooleanTypeSubtract);
+
+	extrudeBuilder1->SetParentFeatureInternal(false);
+
+	Features::Feature *feature1;
+	try{
+
+		feature1 = extrudeBuilder1->CommitFeature();
+	}
+	catch(NXException &ex)
+	{
+
+		NXOpen::UI::GetUI()->NXMessageBox()->Show("fanxiang",NXMessageBox::DialogTypeWarning,ex.GetMessage());
+	}
+	feature1->SetName(setName);
+
+	extrudeBuilder1->Destroy();
 }

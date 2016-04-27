@@ -111,11 +111,12 @@ void BlockCreateSketchOnextrude::initialize_cb()
 {
     try
     {
-        group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
-        integer0 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer0"));
-        string0 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string0"));
-        string01 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string01"));
-        button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
+		group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
+		string0 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string0"));
+		string01 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string01"));
+		string02 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string02"));
+		string03 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string03"));
+		button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
     }
     catch(exception& ex)
     {
@@ -170,28 +171,34 @@ int BlockCreateSketchOnextrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 {
     try
     {
-        if(block == integer0)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == string0)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == string01)
-        {
-        //---------Enter your code here-----------
-        }
+		if(block == string0)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string01)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string02)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string03)
+		{
+			//---------Enter your code here-----------
+		}
         else if(block == button0)
 		{
-			int id = integer0->Value();
-			NXString edge = string0->Value();
-			NXString face = string01->Value();
+			NXString targetExtrude = string0->Value();
+			NXString str1 = string01->Value();
+			NXString str2 = string02->Value();
+			NXString name = string03->Value();
 			//BlockCreateSketchOnextrude::theUI->NXMessageBox()->Show("Block Styler", NXOpen::NXMessageBox::DialogTypeError, edge.getText());
 			Json::Value jcoor;
-			jcoor["extrudeNum"] = id;
-			jcoor["str1"] = edge.getText();
-			jcoor["str2"] = face.getText();
+			jcoor["targetExtrude"] = targetExtrude.getText();
+			jcoor["str1"] = str1.getText();
+			jcoor["str2"] = str2.getText();
+			jcoor["setName"] = name.getText();
 			startRunScripte("CreateSketchOnExtrude",jcoor);
 			//createSketchOnExtrude(id,edge.getText(),face.getText());	
         

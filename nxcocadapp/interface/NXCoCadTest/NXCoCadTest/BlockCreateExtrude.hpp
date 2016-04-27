@@ -32,7 +32,9 @@
 #include <NXOpen/BlockStyler_PropertyList.hxx>
 #include <NXOpen/BlockStyler_Group.hxx>
 #include <NXOpen/BlockStyler_IntegerBlock.hxx>
+#include <NXOpen/BlockStyler_StringBlock.hxx>
 #include <NXOpen/BlockStyler_Button.hxx>
+
 
 //------------------------------------------------------------------------------
 // Namespaces needed for following template
@@ -66,13 +68,12 @@ public:
     
 private:
     const char* theDlxFileName;
-    NXOpen::BlockStyler::BlockDialog* theDialog;
-    NXOpen::BlockStyler::Group* group0;// Block type: Group
-    NXOpen::BlockStyler::IntegerBlock* integer0;// Block type: Integer
-    NXOpen::BlockStyler::IntegerBlock* integer01;// Block type: Integer
-    NXOpen::BlockStyler::IntegerBlock* integer02;// Block type: Integer
-    NXOpen::BlockStyler::IntegerBlock* integer03;// Block type: Integer
-    NXOpen::BlockStyler::Button* button0;// Block type: Button
+	NXOpen::BlockStyler::BlockDialog* theDialog;
+	NXOpen::BlockStyler::Group* group0;// Block type: Group
+	NXOpen::BlockStyler::IntegerBlock* integer0;// Block type: Integer
+	NXOpen::BlockStyler::StringBlock* string0;// Block type: String
+	NXOpen::BlockStyler::StringBlock* string01;// Block type: String
+	NXOpen::BlockStyler::Button* button0;// Block type: Button
     
 };
 #endif //BLOCKCREATEEXTRUDE_H_INCLUDED

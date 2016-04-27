@@ -38,6 +38,7 @@
 #include "stdafx.h"
 #include "NXFunction.h"
 #include "FileUtils.h"
+using namespace std;
 using namespace NXOpen;
 using namespace NXOpen::BlockStyler;
 
@@ -109,12 +110,11 @@ void BlockCreateExtrude::initialize_cb()
 {
     try
     {
-        group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
-        integer0 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer0"));
-        integer01 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer01"));
-        integer02 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer02"));
-        integer03 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer03"));
-        button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
+		group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
+		integer0 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer0"));
+		string0 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string0"));
+		string01 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string01"));
+		button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
     }
     catch(exception& ex)
     {
@@ -167,22 +167,18 @@ int BlockCreateExtrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 {
     try
     {
-        if(block == integer0)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == integer01)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == integer02)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == integer03)
-        {
-        //---------Enter your code here-----------
-        }
+		if(block == integer0)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string0)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string01)
+		{
+			//---------Enter your code here-----------
+		}
         else if(block == button0)
         {
         //---------Enter your code here-----------
@@ -193,15 +189,15 @@ int BlockCreateExtrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 			//cmd += json_writer.write(jCoordinate);
 			//cmd += ", function(){});";
 			//RunScript(cmd.c_str());
-			int  height = integer0->Value();
-			int lineNum = integer01->Value();
-			int sketchNum = integer02->Value();
-			int sketchId = integer03->Value();
+			int height = integer0->Value();
+			NXString targetSketchName = string0->Value();
+			NXString setName = string01->Value();
 			jCoordinate["height"] = height;
-			jCoordinate["lineNum"] = lineNum;
-			jCoordinate["sketchNum"] = sketchNum;
-			jCoordinate["sketchID"] = sketchId;
+			jCoordinate["targetSketchName"] = targetSketchName.getText();
+			jCoordinate["setName"] = setName.getText();
+			//jCoordinate["sketchID"] = sketchId;
 			startRunScripte("Extrude",jCoordinate);
+
 			//lashen(height,lineNum,sketchNum,sketchId);
 
         }

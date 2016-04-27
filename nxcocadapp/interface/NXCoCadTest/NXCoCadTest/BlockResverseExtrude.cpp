@@ -109,13 +109,12 @@ void BlockResverseExtrude::initialize_cb()
 {
     try
     {
-        group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
-        string0 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string0"));
-        string01 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string01"));
-        string02 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string02"));
-        string03 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string03"));
-        integer0 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer0"));
-        button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
+		group0 = dynamic_cast<NXOpen::BlockStyler::Group*>(theDialog->TopBlock()->FindBlock("group0"));
+		string0 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string0"));
+		string01 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string01"));
+		integer0 = dynamic_cast<NXOpen::BlockStyler::IntegerBlock*>(theDialog->TopBlock()->FindBlock("integer0"));
+		string02 = dynamic_cast<NXOpen::BlockStyler::StringBlock*>(theDialog->TopBlock()->FindBlock("string02"));
+		button0 = dynamic_cast<NXOpen::BlockStyler::Button*>(theDialog->TopBlock()->FindBlock("button0"));
     }
     catch(exception& ex)
     {
@@ -168,42 +167,36 @@ int BlockResverseExtrude::update_cb(NXOpen::BlockStyler::UIBlock* block)
 {
     try
     {
-        if(block == string0)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == string01)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == string02)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == string03)
-        {
-        //---------Enter your code here-----------
-        }
-        else if(block == integer0)
-        {
-        //---------Enter your code here-----------
-        }
+		if(block == string0)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string01)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == integer0)
+		{
+			//---------Enter your code here-----------
+		}
+		else if(block == string02)
+		{
+			//---------Enter your code here-----------
+		}
         else if(block == button0)
         {
         //---------Enter your code here-----------
 
-			NXString sketchId = string0->Value();
-			NXString sketchNum = string01->Value();
-			NXString ExtrudeLine = string02->Value();
-			NXString target = string03->Value();
-			int id = integer0->Value();
+			NXString targetSketchName = string0->Value();
+			NXString targetExtrueName = string01->Value();
+			NXString setName = string02->Value();
+			int length = integer0->Value();
 			
 			Json::Value jcoor;
-			jcoor["sketchID"] = sketchId.getText();
-			jcoor["sketchNum"] = sketchNum.getText();
-			jcoor["extrudeLine"] = ExtrudeLine.getText();
-			jcoor["targetExtrude"] = target.getText();
-			jcoor["length"] = id;
+			jcoor["targetSketchName"] = targetSketchName.getText();
+			jcoor["targetExtrueName"] = targetExtrueName.getText();
+			jcoor["setName"] = setName.getText();
+			jcoor["length"] = length;
 			startRunScripte("ReverseExtrude",jcoor);
 			//fanxianglashen(sketchId.getText(),sketchNum.getText(),ExtrudeLine.getText(),target.GetText(),id);
 

@@ -67,12 +67,13 @@ public:
     
 private:
     const char* theDlxFileName;
-    NXOpen::BlockStyler::BlockDialog* theDialog;
-    NXOpen::BlockStyler::Group* group0;// Block type: Group
-    NXOpen::BlockStyler::IntegerBlock* integer0;// Block type: Integer
-    NXOpen::BlockStyler::StringBlock* string0;// Block type: String
-    NXOpen::BlockStyler::StringBlock* string01;// Block type: String
-    NXOpen::BlockStyler::Button* button0;// Block type: Button
+	NXOpen::BlockStyler::BlockDialog* theDialog;
+	NXOpen::BlockStyler::Group* group0;// Block type: Group
+	NXOpen::BlockStyler::StringBlock* string0;// Block type: String
+	NXOpen::BlockStyler::StringBlock* string01;// Block type: String
+	NXOpen::BlockStyler::StringBlock* string02;// Block type: String
+	NXOpen::BlockStyler::StringBlock* string03;// Block type: String
+	NXOpen::BlockStyler::Button* button0;// Block type: Button
     
 };
 #endif //BLOCKCREATESKETCHONEXTRUDE_H_INCLUDED

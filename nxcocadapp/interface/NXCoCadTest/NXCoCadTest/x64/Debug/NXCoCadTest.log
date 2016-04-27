@@ -1,4 +1,4 @@
-﻿生成启动时间为 2016/4/24 星期日 下午 9:59:51。
+﻿生成启动时间为 2016/4/27 星期三 下午 8:34:05。
      1>项目“D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest\NXCoCadTest\NXCoCadTest.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“x64\Debug\NXCoCadTest.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
@@ -7,12 +7,13 @@
          d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I./ /I..\..\ /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\alone\include /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\include /I"D:\Program Files\Siemens\NX 8.5\ugopen" /Zi /nologo /W4 /WX- /Od /D _SECURE_SCL=0 /D _CRT_SECURE_NO_WARNINGS /D _USRDLL /D _WINDLL /D _AFXDLL /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"x64\Debug\\" /Fd"x64\Debug\vc100.pdb" /Gd /TP /errorReport:prompt FileUtils.cpp
          FileUtils.cpp
      1>FileUtils.cpp(34): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-     1>FileUtils.cpp(146): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-     1>FileUtils.cpp(285): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+     1>FileUtils.cpp(162): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+     1>FileUtils.cpp(313): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
      1>FileUtils.cpp(33): warning C4189: “message”: 局部变量已初始化但不引用
-     1>FileUtils.cpp(44): warning C4101: “h”: 未引用的局部变量
-     1>FileUtils.cpp(336): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-     1>FileUtils.cpp(346): warning C4101: “h”: 未引用的局部变量
+     1>FileUtils.cpp(46): warning C4101: “h”: 未引用的局部变量
+     1>FileUtils.cpp(44): warning C4101: “extrudeNum”: 未引用的局部变量
+     1>FileUtils.cpp(380): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+     1>FileUtils.cpp(390): warning C4101: “h”: 未引用的局部变量
          所有输出均为最新。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest\x64\Debug\NXCoCadTest.dll) 与 Linker 的 OutputFile 属性值(D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest_d.dll)不匹配。这可能导致项目生成不正确。若要更正此问题，请确保 $(OutDir)、$(TargetName) 和 $(TargetExt) 属性值与 %(Link.OutputFile) 中指定的值匹配。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(NXCoCadTest) 与 Linker 的 OutputFile 属性值(NXCoCadTest_d)不匹配。这可能导致项目生成不正确。若要更正此问题，请确保 $(OutDir)、$(TargetName) 和 $(TargetExt) 属性值与 %(Link.OutputFile) 中指定的值匹配。
@@ -43,4 +44,4 @@
 
 生成成功。
 
-已用时间 00:00:02.11
+已用时间 00:00:02.80

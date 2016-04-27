@@ -38,7 +38,9 @@ void realizeOperation(char ori[])
 
 		//message->Show("heheheh",NXMessageBox::DialogTypeQuestion,ori);
 		char temp[300];
+		char targetExtrude[100];
 		char str1[100],str2[100];
+		char setName[50];
 		int extrudeNum;
 		int num = 0;
 		char h[3];
@@ -74,25 +76,35 @@ void realizeOperation(char ori[])
 				{
 				case 0:
 					{
-						extrudeNum = atoi(temp);
+						strcpy(targetExtrude,temp);
+						break;
 					}
 				case 1:
 					{
 						strcpy(str1,temp);
+						break;
 
 					}
 				case 2:
 					{
 						strcpy(str2,temp);
+						break;
 
+					}
+				case 3:
+					{
+						strcpy(setName,temp);
+						break;
 					}
 				}
 				num ++;
 			}
 		}
- 		//message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, str1);
- 		//message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, str2);
-		createSketchOnExtrude(extrudeNum,str1,str2);
+// 		message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, targetExtrude);
+// 		message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, setName);
+//  		message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, str1);
+//  		message->Show("CreateSketchOnExtrude", NXOpen::NXMessageBox::DialogTypeInformation, str2);
+		createSketchOnExtrude(targetExtrude,str1,str2,setName);
 	}
 	if (strstr(ori,"DrawCircle"))
 	{
@@ -117,20 +129,24 @@ void realizeOperation(char ori[])
 				case 0:
 					{
 						x = atof(temp);
+						break;
 					}
 				case 1:
 					{
 						y = atof(temp);
+						break;
 
 					}
 				case 2:
 					{
 						z = atof(temp);
+						break;
 
 					}
 				case 3:
 					{
 						r = atof(temp);
+						break;
 
 					}
 				}
@@ -144,6 +160,7 @@ void realizeOperation(char ori[])
 	 if (strstr(ori,"CreateRect"))
 	{
 		int length = strlen(ori);
+		//message->Show("ReadBlock", NXOpen::NXMessageBox::DialogTypeInformation, "CreateRect");
 
 		char temp[300];
 		double para1,para2,para3,para4,para5;
@@ -167,29 +184,35 @@ void realizeOperation(char ori[])
 				case 0:
 					{
 						para1 = atof(temp);
+						break;
 					}
 				case 1:
 					{
 						para2 = atof(temp);
+						break;
 
 					}
 				case 2:
 					{
 						para3 = atof(temp);
+						break;
 
 					}
 				case 3:
 					{
 						para4 = atof(temp);
 
+						break;
 					}
 				case 4:
 					{
 						para5 = atof(temp);
+						break;
 					}
 				case 5:
 					{
 						type = atoi(temp);
+						break;
 					}
 				}
 				num ++;
@@ -214,7 +237,8 @@ void realizeOperation(char ori[])
 	if (strstr(ori,"ReverseExtrude"))
 	{
 		char temp[300];
-		char sketchId[100],sketchNum[100],lashenLine[100],target[100];
+		char targetSketchName[100],targetExtrueName[100];
+		char setName[100];
 		int exLength;
 		int num = 0;
 		for (int i=0; i<length; i++)
@@ -230,8 +254,8 @@ void realizeOperation(char ori[])
 					{
 
 						temp[start++] = ori[index];
-						index ++;
 						i = index;
+						index ++;
 					}
 				}
 				else
@@ -239,41 +263,45 @@ void realizeOperation(char ori[])
 					while(ori[index] != '?')
 					{
 						temp[start++] = ori[index];
-						index ++;
 						i = index;
+						index ++;
 					}
 				}
 				switch(num)
 				{
 				case 0:
 					{
-						strcpy(sketchId,temp);
+						strcpy(targetSketchName,temp);
+						break;
 					}
 				case 1:
 					{
-						strcpy(sketchNum,temp);
+						strcpy(targetExtrueName,temp);
+						break;
 
 					}
 				case 2:
 					{
-						strcpy(lashenLine,temp);
-
+						strcpy(setName,temp);
+						break;
 					}
 				case 3:
 					{
-						strcpy(target,temp);
-
-					}
-				case 4:
-					{
 						exLength = atoi(temp);
+						break;
+
 					}
 				}
 				num ++;
 			}
 		}
-		//message->Show("ReadBlock", NXOpen::NXMessageBox::DialogTypeInformation, "ReverseExtrude");
-		fanxianglashen(sketchId,sketchNum,lashenLine,target,exLength);
+		//message->Show("targetSketchName", NXOpen::NXMessageBox::DialogTypeInformation, targetSketchName);
+// 		message->Show("targetExtrueName", NXOpen::NXMessageBox::DialogTypeInformation, targetExtrueName);
+// 		message->Show("setName", NXOpen::NXMessageBox::DialogTypeInformation, setName);
+// 		char h[4] = "";
+// 		sprintf(h,"%d",exLength);
+// 		message->Show("exLength", NXOpen::NXMessageBox::DialogTypeInformation, h);
+		fanxianglashen(targetSketchName,targetExtrueName,exLength,setName);//,exLength);
 	}
 	if (strstr(ori,"CreateSketch") && (strlen(ori) < 30))
 	{
@@ -285,48 +313,64 @@ void realizeOperation(char ori[])
 		int length = strlen(ori);
 
 		char temp[300];
-		int height,lineNum,sketchNum,sketchId;
+		int height;
+		char targetSketchName[100],setName[100];
 		int num = 0;
 		for (int i=0; i<length; i++)
 		{
-			if (isNum(ori[i]))
+			if ((ori[i] == ':' || ori[i] == ' ') && (ori[i + 1] != ' '))
 			{
-				int index = i;
+				int index = i + 1;
 				int start = 0;
 				memset(temp,0,sizeof(temp));
-				while(isNum(ori[index]))
+				if (isNum(ori[index]))
 				{
-					temp[start++] = ori[index];
-					index ++;
-					i = index;
+					while(isNum(ori[index]))
+					{
+
+						temp[start++] = ori[index];
+						i = index;
+						index ++;
+					}
+				}
+				else
+				{
+					while(ori[index] != '?')
+					{
+						temp[start++] = ori[index];
+						i = index;
+						index ++;
+					}
 				}
 				switch(num)
 				{
 				case 0:
 					{
 						height = atoi(temp);
+						break;
 					}
 				case 1:
 					{
-						lineNum = atoi(temp);
+						strcpy(targetSketchName,temp);
+						break;
 
 					}
 				case 2:
 					{
-						sketchNum = atoi(temp);
-
-					}
-				case 3:
-					{
-						sketchId = atoi(temp);
+						strcpy(setName,temp);
+						break;
 
 					}
 				}
 				num ++;
 			}
 		}
-		//message->Show("ReadBlock", NXOpen::NXMessageBox::DialogTypeInformation, "Extrude");
-		lashen(height,lineNum,sketchNum,sketchId);
+// 		message->Show("targetSketchName", NXOpen::NXMessageBox::DialogTypeInformation, targetSketchName);
+// 		message->Show("setName", NXOpen::NXMessageBox::DialogTypeInformation, setName);
+// 		char h[4] = "";
+// 		sprintf(h,"%d",height);
+// 		message->Show("height", NXOpen::NXMessageBox::DialogTypeInformation, h);
+		lashen(height,targetSketchName,setName);//,sketchId);
 	}
 }
 
