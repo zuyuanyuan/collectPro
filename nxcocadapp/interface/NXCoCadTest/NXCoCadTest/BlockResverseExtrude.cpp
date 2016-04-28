@@ -55,7 +55,7 @@ BlockResverseExtrude::BlockResverseExtrude()
         // Initialize the NX Open C++ API environment
         BlockResverseExtrude::theSession = NXOpen::Session::GetSession();
         BlockResverseExtrude::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockResverseExtrude.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockResverseExtrude.dlx";
         theDialog = BlockResverseExtrude::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockResverseExtrude::apply_cb));

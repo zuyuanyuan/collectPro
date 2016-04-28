@@ -103,7 +103,7 @@ BlockCreatePoint::BlockCreatePoint()
         // Initialize the NX Open C++ API environment
         BlockCreatePoint::theSession = NXOpen::Session::GetSession();
         BlockCreatePoint::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockCreatePoint.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockCreatePoint.dlx";
         theDialog = BlockCreatePoint::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockCreatePoint::apply_cb));

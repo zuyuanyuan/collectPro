@@ -57,7 +57,7 @@ BlockDrawCircle::BlockDrawCircle()
         // Initialize the NX Open C++ API environment
         BlockDrawCircle::theSession = NXOpen::Session::GetSession();
         BlockDrawCircle::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockDrawCircle.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockDrawCircle.dlx";
         theDialog = BlockDrawCircle::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockDrawCircle::apply_cb));

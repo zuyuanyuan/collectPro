@@ -1,10 +1,13 @@
-﻿生成启动时间为 2016/4/27 星期三 下午 8:34:05。
+﻿生成启动时间为 2016/4/28 星期四 下午 4:49:07。
      1>项目“D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest\NXCoCadTest\NXCoCadTest.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“x64\Debug\NXCoCadTest.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          所有输出均为最新。
-         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I./ /I..\..\ /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\alone\include /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\include /I"D:\Program Files\Siemens\NX 8.5\ugopen" /Zi /nologo /W4 /WX- /Od /D _SECURE_SCL=0 /D _CRT_SECURE_NO_WARNINGS /D _USRDLL /D _WINDLL /D _AFXDLL /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"x64\Debug\\" /Fd"x64\Debug\vc100.pdb" /Gd /TP /errorReport:prompt FileUtils.cpp
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\x86_amd64\CL.exe /c /I./ /I..\..\ /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\alone\include /ID:\xietongkuangjia3\CollaborativeFramework_20160401\COMX_SDK\include /I"D:\Program Files\Siemens\NX 8.5\ugopen" /Zi /nologo /W4 /WX- /Od /D _SECURE_SCL=0 /D _CRT_SECURE_NO_WARNINGS /D _USRDLL /D _WINDLL /D _AFXDLL /Gm /EHsc /RTC1 /MD /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"x64\Debug\\" /Fd"x64\Debug\vc100.pdb" /Gd /TP /errorReport:prompt BlockCreateExtrude.cpp BlockCreatePoint.cpp BlockCreateRectSameY.cpp BlockCreateRectSameZ.cpp BlockCreateSketchOnextrude.cpp BlockDrawCircle.cpp BlockResverseExtrude.cpp BlockcreateRectSameX.cpp FileUtils.cpp MainMenu.cpp
+         MainMenu.cpp
+     1>MainMenu.cpp(79): warning C4101: “ex”: 未引用的局部变量
+     1>MainMenu.cpp(307): warning C4101: “e”: 未引用的局部变量
          FileUtils.cpp
      1>FileUtils.cpp(34): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
      1>FileUtils.cpp(162): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
@@ -14,6 +17,43 @@
      1>FileUtils.cpp(44): warning C4101: “extrudeNum”: 未引用的局部变量
      1>FileUtils.cpp(380): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
      1>FileUtils.cpp(390): warning C4101: “h”: 未引用的局部变量
+         BlockcreateRectSameX.cpp
+     1>BlockcreateRectSameX.cpp(67): warning C4101: “ex”: 未引用的局部变量
+         BlockResverseExtrude.cpp
+     1>BlockResverseExtrude.cpp(67): warning C4101: “ex”: 未引用的局部变量
+         BlockDrawCircle.cpp
+     1>BlockDrawCircle.cpp(69): warning C4101: “ex”: 未引用的局部变量
+     1>BlockDrawCircle.cpp(240): warning C4189: “message”: 局部变量已初始化但不引用
+         BlockCreateSketchOnextrude.cpp
+     1>BlockCreateSketchOnextrude.cpp(68): warning C4101: “ex”: 未引用的局部变量
+         BlockCreateRectSameZ.cpp
+     1>BlockCreateRectSameZ.cpp(67): warning C4101: “ex”: 未引用的局部变量
+         BlockCreateRectSameY.cpp
+     1>BlockCreateRectSameY.cpp(67): warning C4101: “ex”: 未引用的局部变量
+         BlockCreatePoint.cpp
+     1>BlockCreatePoint.cpp(115): warning C4101: “ex”: 未引用的局部变量
+     1>BlockCreatePoint.cpp(388): warning C4189: “displayPart”: 局部变量已初始化但不引用
+         BlockCreateExtrude.cpp
+     1>BlockCreateExtrude.cpp(69): warning C4101: “ex”: 未引用的局部变量
+         Generating Code...
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreateextrude.cpp(140): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreateextrude.cpp(157): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreatepoint.cpp(268): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreatepoint.cpp(285): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamey.cpp(161): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamey.cpp(178): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamez.cpp(161): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamez.cpp(178): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreatesketchonextrude.cpp(142): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreatesketchonextrude.cpp(159): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockdrawcircle.cpp(188): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockdrawcircle.cpp(205): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockresverseextrude.cpp(140): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockresverseextrude.cpp(157): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamex.cpp(161): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\blockcreaterectsamex.cpp(178): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\mainmenu.cpp(242): warning C4702: 无法访问的代码
+     1>d:\xietongkuangjia3\nxcocadapp_cp1\interface\nxcocadtest\nxcocadtest\mainmenu.cpp(259): warning C4702: 无法访问的代码
          所有输出均为最新。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest\x64\Debug\NXCoCadTest.dll) 与 Linker 的 OutputFile 属性值(D:\xietongkuangjia3\nxcocadapp_cp1\interface\NXCoCadTest_d.dll)不匹配。这可能导致项目生成不正确。若要更正此问题，请确保 $(OutDir)、$(TargetName) 和 $(TargetExt) 属性值与 %(Link.OutputFile) 中指定的值匹配。
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(992,5): warning MSB8012: TargetName(NXCoCadTest) 与 Linker 的 OutputFile 属性值(NXCoCadTest_d)不匹配。这可能导致项目生成不正确。若要更正此问题，请确保 $(OutDir)、$(TargetName) 和 $(TargetExt) 属性值与 %(Link.OutputFile) 中指定的值匹配。
@@ -44,4 +84,4 @@
 
 生成成功。
 
-已用时间 00:00:02.80
+已用时间 00:00:19.96

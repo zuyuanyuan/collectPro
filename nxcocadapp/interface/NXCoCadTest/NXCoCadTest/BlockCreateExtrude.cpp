@@ -57,7 +57,7 @@ BlockCreateExtrude::BlockCreateExtrude()
         // Initialize the NX Open C++ API environment
         BlockCreateExtrude::theSession = NXOpen::Session::GetSession();
         BlockCreateExtrude::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockCreateExtrude.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockCreateExtrude.dlx";
         theDialog = BlockCreateExtrude::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockCreateExtrude::apply_cb));

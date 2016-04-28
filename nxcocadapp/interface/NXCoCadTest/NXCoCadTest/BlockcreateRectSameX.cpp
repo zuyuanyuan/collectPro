@@ -55,7 +55,7 @@ BlockcreateRectSameX::BlockcreateRectSameX()
         // Initialize the NX Open C++ API environment
         BlockcreateRectSameX::theSession = NXOpen::Session::GetSession();
         BlockcreateRectSameX::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockcreateRectSameX.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockcreateRectSameX.dlx";
         theDialog = BlockcreateRectSameX::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockcreateRectSameX::apply_cb));

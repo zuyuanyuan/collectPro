@@ -56,7 +56,7 @@ BlockCreateSketchOnextrude::BlockCreateSketchOnextrude()
         // Initialize the NX Open C++ API environment
         BlockCreateSketchOnextrude::theSession = NXOpen::Session::GetSession();
         BlockCreateSketchOnextrude::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\BlockCreateSketchOnextrude.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\BlockCreateSketchOnextrude.dlx";
         theDialog = BlockCreateSketchOnextrude::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &BlockCreateSketchOnextrude::apply_cb));

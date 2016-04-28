@@ -67,7 +67,7 @@ MainMenu::MainMenu()
         // Initialize the NX Open C++ API environment
         MainMenu::theSession = NXOpen::Session::GetSession();
         MainMenu::theUI = UI::GetUI();
-        theDlxFileName = "D:\\xietongkuangjia3\\nxcocadapp_cp1\\interface\\NXCoCadTest\\NXCoCadTest\\MainMenu.dlx";
+        theDlxFileName = "Y:\\nxcocadapp\\data\\dlxs\\MainMenu.dlx";
         theDialog = MainMenu::theUI->CreateDialog(theDlxFileName);
         // Registration of callback functions
         theDialog->AddApplyHandler(make_callback(this, &MainMenu::apply_cb));
